@@ -14,6 +14,7 @@ module.exports = {
     'svelte3',
     '@typescript-eslint'
   ],
+	ignorePatterns: ["generated-schema.d.ts"],
   overrides: [
     {
       files: ['*.svelte'],

@@ -1,24 +1,25 @@
 <script lang="ts">
-	import Router from 'svelte-spa-router';
+	import Router, {link} from 'svelte-spa-router';
 	import Navbar from './components/Navbar.svelte'
-	import Home from './pages/Home.svelte';
-	import QuestionsSummary from './pages/QuestionsSummary.svelte';
-	import Question from './pages/Question.svelte';
-	import Profile from './pages/Profile.svelte';
-	import NotFound from './pages/NotFound.svelte';
-
-	const routes = {
-		'/': Home,
-		'/questions/:typeOfQuestions': QuestionsSummary,
-		'/question/:questionID': Question,
-		'/me': Profile,
-		'*': NotFound,
-	}
+	import routes from './routes'
 </script>
 
 <header>
+	<h1>
+		<img src="//www.senseilabs.com/wp-content/themes/senseilabs/images/sensei-logo-icon.png" alt="SenseiLabs Symbol" role="presentation">
+		<a href="/" use:link>Sensei Flow</a>
+	</h1>
 	<Navbar/>
 </header>
+<aside>
+
+</aside>
 <main>
 	<Router {routes}/>
 </main>
+
+<style>
+	header {
+		background: gray ;
+	}
+</style>

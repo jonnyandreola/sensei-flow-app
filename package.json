@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
+    "graphql-start": "openapi-to-graphql http://localhost:62609/swagger/v1/swagger.json --url http://localhost:62609 --cors",
     "dev": "rollup -c -w",
     "start": "sirv public",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "test:coverage": "node -e \"console.log('❌ -> Coverage is currently not working, please check status here: https://github.com/mihar-22/svelte-jester/issues/33 and then replace this with `npm test -- --collectCoverage`');\"",
     "validate": "svelte-check",
-		"lint": "node_modules/eslint/bin/eslint.js ./src",
+    "lint": "node_modules/eslint/bin/eslint.js ./src",
     "generate-schema": "npx openapi-typescript ./swagger.json -o ./scr/types/generated-schema.d.ts"
   },
   "devDependencies": {
@@ -42,6 +43,9 @@
     "typescript": "^4.0.0"
   },
   "dependencies": {
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
+    "openapi-to-graphql": "^2.3.0",
     "sirv-cli": "^1.0.0",
     "svelte-spa-router": "^3.1.0"
   }

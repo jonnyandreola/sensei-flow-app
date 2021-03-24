@@ -1,60 +1,9 @@
-const apiHost = 'https://localhost:44312/'
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { request } from 'graphql-request';
+import type { Variables } from 'graphql-request/dist/types';
 
-const normalizeURL = (url: string): string => url.replace(/\/\//g, '/')
+const apiHost = 'http://localhost:3000/graphql'
 
-const getURL = (path: string, id?:number): string => normalizeURL(`${apiHost}${path}${id ? `/${id}` : ''}`);
-
-export const api = async <T>(path: string, id?: number, data?: Record<string, unknown>, requestInit?: RequestInit): Promise<T> => {
-	if (data) {
-		requestInit.body = JSON.stringify(data);
-	}
-
-	const response = await fetch(getURL(path, id), requestInit);
-	if (!response.ok) {
-		throw new Error(response.statusText);
-	}
-
-	return await response.json() as T;
-}
-
-export const get = async <T>(path: string, id?: number, data?: Record<string, unknown>): Promise<T> => {
-	return await api(path, id, data);
-}
-
-export const post = async <T>(path: string, id?: number, data?: Record<string, unknown>): Promise<T> => {
-	if (!id) {
-		throw new Error('Invalid ID')
-	}
-
-	if (data) {
-		throw new Error('Must provide data for post')
-	}
-
-	return await api(path, id, data, {
-		method: 'POST'
-	});
-}
-
-export const patch = async <T>(path: string, id?: number, data?: Record<string, unknown>): Promise<T> => {
-	if (!id) {
-		throw new Error('Invalid ID')
-	}
-
-	if (data) {
-		throw new Error('Must provide data for patch')
-	}
-
-	return await api(path, id, data, {
-		method: 'PATCH'
-	});
-}
-
-export const remove = async <T>(path: string, id?: number, data?: Record<string, unknown>): Promise<T> => {
-	if (!id) {
-		throw new Error('Invalid ID')
-	}
-
-	return await api(path, id, data, {
-		method: 'DELETE'
-	});
+export default async <T>(query: string, variables?: Variables): Promise<T> => {
+	return await request(apiHost, query, variables);
 }

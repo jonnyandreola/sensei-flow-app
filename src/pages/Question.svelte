@@ -1,14 +1,22 @@
 <script lang="ts">
-	import { get } from '../helpers/api';
+import { gql } from 'graphql-request';
+
+	import api from '../helpers/api';
 	import type { QuestionDetails } from '../types/question';
 
 	export let params: {questionID: string};
 
 	let questionID: number;
 	let questionPromise: Promise<QuestionDetails>;
+	let query;
 
 	$: questionID = parseInt(params.questionID);
-	$: questionPromise = get('questions', questionID);
+	$: query = gql`{
+		questionDetail(id: ${questionID}) {
+			title
+		}
+	}`
+	$: questionPromise = api(query);
 </script>
 
 <!-- Single Question -->

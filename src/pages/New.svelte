@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import dialogPolyfill from 'dialog-polyfill'
+	import { push } from 'svelte-spa-router'
 	import { gql } from 'graphql-request';
 	import api from '../helpers/api';
+	import type { QuestionPostRequest, QuestionPostResponse } from '../types/question';
+	import type { GraphQLResponse } from '../types/graphql-response';
 
+	let isLoading = false;
 	let dialog;
 
 	const newMessageWarningKey = 'senseiflow.ignoreNewQuestionWarning';
@@ -23,8 +27,33 @@
 		dialog.close();
 	}
 
-	function formSubmit(e: Event) {
+	async function createQuestion(question: QuestionPostRequest): Promise<QuestionPostResponse> {
+		isLoading = true;
+		const postQuery = gql`
+			mutation CreateQuestion($question: QuestionPostRequestInput!) {
+				postQuestions(questionPostRequestInput: $question)
+			}
+		`
+		const response = await api<QuestionPostResponse>(postQuery, {question});
+		isLoading = false;
+
+		return response;
+	}
+
+	async function formSubmit(e: Event): Promise<void> {
 		e.preventDefault();
+		const { titleInput, descriptionInput } = e.target as HTMLFormElement;
+		let questionID;
+		try {
+			questionID =  await createQuestion({
+				title: titleInput.value,
+				description: descriptionInput.value
+			}).then(({postQuestions}) => postQuestions)
+		} catch (err) {
+			console.error(err)
+		}
+
+		push(`/question/${questionID}`)
 	}
 </script>
 
@@ -47,14 +76,18 @@
 
 <form on:submit="{formSubmit}" autocomplete="off">
 	<div class="form-control">
-		<label for="title">Title</label>
-		<input id="title" type="text">
+		<label for="titleInput">Title</label>
+		<input id="titleInput" type="text" required minlength="20" maxlength="150">
 	</div>
 	<div class="form-control">
-		<label for="description">Description</label>
-		<textarea id="description" cols="30" rows="10"></textarea>
+		<label for="descriptionInput">Description</label>
+		<textarea id="descriptionInput" cols="30" rows="10" required></textarea>
 	</div>
-	<input type="submit" value="Create Question">
+	{#if isLoading}
+		<input type="submit" value="Creating Question..." disabled>
+	{:else}
+		<input type="submit" value="Create Question">
+	{/if}
 </form>
 
 

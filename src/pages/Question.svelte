@@ -13,10 +13,11 @@ import { gql } from 'graphql-request';
 	$: questionID = parseInt(params.questionID);
 	$: query = gql`{
 		questionDetail(id: ${questionID}) {
-			title
+			title,
+			description
 		}
 	}`
-	$: questionPromise = api(query);
+	$: questionPromise = api(query).then(({questionDetail}) => questionDetail);
 </script>
 
 <!-- Single Question -->
@@ -26,6 +27,7 @@ import { gql } from 'graphql-request';
 		<p>...waiting</p>
 	{:then question}
 		<p>title: {question.title}</p>
+		<div>{ @html question.description }</div>
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}

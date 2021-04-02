@@ -1,0 +1,39 @@
+@import './color-scheme.css';
+
+:root {
+	--spacing-xs: calc(1rem  / 3);
+	--spacing-sm: calc(var(--spacing-xs) * 2);
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-xl: 3rem;
+
+	--font-xs: 0.75rem;
+	--font-sm: 1rem;
+	--font-md: 1.3rem;
+	--font-lg: 1.5rem;
+	--font-xl: 2rem;
+
+	--background-body: linear-gradient(to bottom, var(--color-primary-100), var(--color-primary-100) 56px, rgba(0, 0, 0, .99) 56px, var(--color-neutral-100) 64px);
+	--color-text: var(--color-neutral-800);
+	--color-text-alt: var(--color-netral-100);
+	--color-link: var(--color-primary-900);
+	--color-link-alt: var(--color-primary-100);
+}
+
+/* https://stackoverflow.com/a/63322762/13160100 */
+::backdrop {
+	--color-text: var(--color-neutral-800);
+	--color-text-alt: var(--color-netral-100);
+	--color-link: var(--color-primary-800);
+	--color-link-alt: var(--color-primary-100);
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--background-body: linear-gradient(to bottom, var(--color-primary-100), var(--color-primary-100) 56px, var(--color-neutral-300) 56px, var(--color-neutral-100) 60px);
+		--color-text: var(--color-neutral-800);
+		--color-text-alt: var(--color-netral-100);
+		--color-link: var(--color-primary-800);
+		--color-link-alt: var(--color-primary-100);
+	}
+}

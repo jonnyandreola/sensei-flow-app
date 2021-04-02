@@ -1,21 +1,29 @@
-:root {
+
+@import './variables.css';
+
+html {
+	font-size: 12px;
 }
-html, body {
+
+html,
+body {
 	position: relative;
 	width: 100%;
 	height: 100%;
 }
 
 body {
-	color: #333;
+	background: var(--background-body);
+	color: var(--color-text);
 	margin: 0;
-	padding: 8px;
+	padding: 0;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: var(--font-md);
 }
 
 a {
-	color: rgb(0,100,200);
+	color: var(--color-link);
 	text-decoration: none;
 }
 
@@ -24,5 +32,18 @@ a:hover {
 }
 
 a:visited {
-	color: rgb(0,80,160);
+	color: var(--color-link);
+}
+
+dialog::backdrop {
+	background: var(--background-body);
+	color: var(--color-text);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.wrapper {
+	width: 1200px;
+	max-width: 100%;
+	margin: 0 auto;
+
 }

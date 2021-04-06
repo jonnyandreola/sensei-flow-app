@@ -22,8 +22,8 @@ body {
 	font-size: var(--font-md);
 }
 
-a {
-	color: var(--color-link);
+a, .form-control .editor-toolbar a {
+	color: var(--color-link) !important;
 	text-decoration: none;
 }
 
@@ -41,9 +41,31 @@ dialog::backdrop {
   background: rgba(0, 0, 0, 0.5);
 }
 
+input[type=text] {
+	background: var(--background-secondary);
+	border: none;
+	color: var(--color-text);
+	padding: var(--spacing-sm);
+	-webkit-appearance: none;
+}
+
 .wrapper {
 	width: 1200px;
 	max-width: 100%;
 	margin: 0 auto;
 
+}
+
+.CodeMirror {
+	color: var(--color-text) !important;
+	background: var(--background-secondary) !important;
+	border-color: var(--color-neutral-100) !important;
+}
+
+.CodeMirror-cursor {
+	border-color: var(--color-text) !important;
+}
+
+.editor-toolbar {
+	border-color: var(--background-secondary) !important;
 }
